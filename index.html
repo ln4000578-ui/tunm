@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="vi"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tool Make Aim</title>
+
+<link rel="stylesheet" href="nen-tun.css"></head>
+<body>
+
+<canvas id="web-canvas"></canvas>
+<div class="bg-glow" aria-hidden="true"><div class="bg-glow-1"></div><div class="bg-glow-2"></div><div class="bg-glow-3"></div></div>
+
+<header id="hd"><div class="bar">
+<button class="ib" onclick="dr(1)" id="mb"></button>
+<div class="logo" onclick="go('home')" id="lg"></div>
+<button class="ib g" onclick="goSearch()" id="sb"></button>
+<button class="upill" id="uBtn" onclick="um()"><img src="duong-dan-anh.jpg" alt="Ảnh" onerror="this.style.display='none';this.parentNode.innerHTML='👤'"></button>
+</div><div class="um" id="um"></div></header>
+<main id="app" class="wrap"></main>
+<div class="ov" id="dOv" onclick="if(event.target===this)dr(0)"><aside class="drawer" id="drw"></aside></div>
+<div class="ov" id="mOv" onclick="if(event.target===this)modal(0)"><div class="modal" id="md"></div></div>
+<div class="toast" id="toast"></div>
+
+<!-- GATE MODAL -->
+<div id="ffGateModal">
+  <div class="gate-box">
+    <button class="gate-close" onclick="ffCloseGate()">✕</button>
+    <div class="gate-logo">🎯</div>
+    <div class="gate-title">FF TOOL</div>
+    <div class="gate-sub">Nhập Key để mở khoá</div>
+    <input type="text" id="ffGateInput" class="gate-input" placeholder="FFVIP-XXXX-XXXX-XXXX" spellcheck="false" autocomplete="off" autocapitalize="characters">
+    <button type="button" class="gate-btn" onclick="ffSubmitGate()">XÁC NHẬN</button>
+    <div id="ffGateMsg" class="gate-msg"></div>
+  </div>
+</div>
+
+<!-- TOOL OVERLAY -->
+<div id="ffToolOverlay">
+  <div class="tool-wrap">
+    <div class="tool-top">
+      <div class="tool-logo">🎯</div>
+      <div class="tool-brand">FF TOOL</div>
+      <div class="tool-pill" id="ffPill">● ACTIVE</div>
+      <button class="tool-close" onclick="ffCloseTool()">✕</button>
+    </div>
+
+    <div class="tool-hero">
+      <div class="hero-lbl" id="ffHeroLbl">KEY · ••••••••</div>
+      <div class="hero-status" id="ffHeroStatus">● ACTIVE</div>
+      <div class="hero-meta">
+        <span>🆔 <b id="ffDev">--</b></span>
+        <span>📶 Ping: <b id="ffPing" style="color:#3dba6e">--</b></span>
+        <span id="ffWifi"><b>Online</b></span>
+      </div>
+      <div class="hero-meta" style="margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,.06)">
+        <span>📥 Lượt tải: <b id="ffQuota">--</b></span>
+        <span id="ffQuotaHint" style="font-size:9.5px;color:var(--mute)"></span>
+      </div>
+    </div>
+
+    <div id="ffExhaustedBanner" style="display:none;padding:14px;border-radius:12px;background:linear-gradient(135deg,rgba(239,68,68,.22),rgba(239,68,68,.08));border:2px solid rgba(239,68,68,.55);margin-bottom:10px;text-align:center;box-shadow:0 0 20px rgba(239,68,68,.25)">
+      <div style="font-size:16px;font-weight:900;color:#f87171;margin-bottom:4px">🔒 KEY ĐÃ HẾT HẠN</div>
+      <div id="ffExhaustedMsg" style="font-size:11.5px;color:#fca5a5;line-height:1.4">Key đã dùng hết lượt tải. Không thể tải thêm file.</div>
+    </div>
+
+    <div class="ff-section-title"><span>📱</span> CHỌN ỨNG DỤNG</div>
+    <div class="ff-app-grid">
+      <button type="button" class="ff-app-card active" data-app="ffth" onclick="ffSelectApp('ffth')">
+        <div class="app-ico">🎯</div>
+        <div class="app-name">FREE FIRE TH</div>
+        <div class="app-sub">Mobile</div>
+      </button>
+      <button type="button" class="ff-app-card" data-app="ffm" onclick="ffSelectApp('ffm')">
+        <div class="app-ico">💠</div>
+        <div class="app-name">FREE FIRE MAX</div>
+        <div class="app-sub">Max</div>
+      </button>
+    </div>
+
+    <div class="ff-section-title"><span>📑</span> CHỌN CHỨC NĂNG</div>
+    <div class="ff-select-wrap">
+      <select id="ffFuncSelect" class="ff-select" onchange="ffOnFuncChange()">
+        <option value="">-- Chọn chức năng --</option>
+      </select>
+    </div>
+
+    <div class="ff-section-title"><span>📦</span> SẢN PHẨM</div>
+    <div class="file-dropzone" id="ffFileDropMain" tabindex="0">
+      <span class="fd-ico">📁</span>
+      <div class="fd-main">Nạp file gốc · bấm / kéo thả / Ctrl+V</div>
+      <div class="fd-sub" id="ffFileDropMainSub">Chưa có file</div>
+    </div>
+    <div class="file-info" id="ffFileInfoMain"></div>
+
+    <button type="button" class="ff-confirm-btn" onclick="ffConfirmAction()">XÁC NHẬN SẢN PHẨM</button>
+    <div class="res-zone" id="resMain"></div>
+
+    <div class="loading-ov" id="ffLoading"><div class="proc-box"><div class="proc-title">Đang xử lý</div><div class="proc-desc">Vui lòng chờ...</div><div class="proc-bar"><div class="proc-fill" id="ffProcFill"></div></div><div class="proc-pct"><span id="ffProcPct">0</span>%</div></div></div>
+    <div class="toast-t" id="ffToast"></div>
+  </div>
+</div>
+
+<!-- CANVAS -->
+
+
+<!-- MAIN APP -->
+
+
+<!-- FF TOOL CORE -->
+
+
+
+<script src="tun-tun.js" defer=""></script></body></html>
