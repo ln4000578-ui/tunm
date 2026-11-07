@@ -1,21 +1,81 @@
 <!DOCTYPE html>
-<html lang="vi"><head>
+<html lang="vi">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Tool Make Aim</title>
+<link rel="stylesheet" href="nen-tun.css">
 
-<link rel="stylesheet" href="nen-tun.css"></head>
+<style>
+/* ===== ĐỔI MÀU CHỮ LOGO "TOOL MAKE AIM" THÀNH TRẮNG ===== */
+.logo,
+#lg,
+.logo * {
+  color: #ffffff !important;
+  font-weight: 900;
+  letter-spacing: .5px;
+}
+
+/* ===== ẢNH LOGO TRONG GATE + TOOL ===== */
+.gate-logo,
+.tool-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.gate-logo img,
+.tool-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* ===== ẢNH ICON APP CARD ===== */
+.ff-app-card .app-ico {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.ff-app-card .app-ico img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* ===== ẢNH AVATAR NÚT USER ===== */
+.upill img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+</style>
+</head>
 <body>
 
 <canvas id="web-canvas"></canvas>
 <div class="bg-glow" aria-hidden="true"><div class="bg-glow-1"></div><div class="bg-glow-2"></div><div class="bg-glow-3"></div></div>
 
 <header id="hd"><div class="bar">
-<button class="ib" onclick="dr(1)" id="mb"></button>
-<div class="logo" onclick="go('home')" id="lg"></div>
-<button class="ib g" onclick="goSearch()" id="sb"></button>
-<button class="upill" id="uBtn" onclick="um()"><img src="duong-dan-anh.jpg" alt="Ảnh" onerror="this.style.display='none';this.parentNode.innerHTML='👤'"></button>
+  <button class="ib" onclick="dr(1)" id="mb"></button>
+
+  <!-- LOGO HEADER: chữ trắng -->
+  <div class="logo" onclick="go('home')" id="lg">Tool Make Aim</div>
+
+  <button class="ib g" onclick="goSearch()" id="sb"></button>
+
+  <!-- AVATAR: thay 👤 bằng ảnh -->
+  <button class="upill" id="uBtn" onclick="um()">
+    <img src="avatar-default.png" alt="Ảnh"
+         onerror="this.onerror=null;this.src='avatar-default.png'">
+  </button>
 </div><div class="um" id="um"></div></header>
+
 <main id="app" class="wrap"></main>
 <div class="ov" id="dOv" onclick="if(event.target===this)dr(0)"><aside class="drawer" id="drw"></aside></div>
 <div class="ov" id="mOv" onclick="if(event.target===this)modal(0)"><div class="modal" id="md"></div></div>
@@ -25,7 +85,13 @@
 <div id="ffGateModal">
   <div class="gate-box">
     <button class="gate-close" onclick="ffCloseGate()">✕</button>
-    <div class="gate-logo">🎯</div>
+
+    <!-- LOGO GATE: thay 🎯 bằng ảnh -->
+    <div class="gate-logo">
+      <img src="ff-logo.png" alt="FF Tool"
+           onerror="this.onerror=null;this.src='ff-logo.png'">
+    </div>
+
     <div class="gate-title">FF TOOL</div>
     <div class="gate-sub">Nhập Key để mở khoá</div>
     <input type="text" id="ffGateInput" class="gate-input" placeholder="FFVIP-XXXX-XXXX-XXXX" spellcheck="false" autocomplete="off" autocapitalize="characters">
@@ -38,7 +104,13 @@
 <div id="ffToolOverlay">
   <div class="tool-wrap">
     <div class="tool-top">
-      <div class="tool-logo">🎯</div>
+
+      <!-- LOGO TOOL: thay 🎯 bằng ảnh -->
+      <div class="tool-logo">
+        <img src="ff-logo.png" alt="FF Tool"
+             onerror="this.onerror=null;this.src='ff-logo.png'">
+      </div>
+
       <div class="tool-brand">FF TOOL</div>
       <div class="tool-pill" id="ffPill">● ACTIVE</div>
       <button class="tool-close" onclick="ffCloseTool()">✕</button>
@@ -65,11 +137,17 @@
 
     <div class="ff-section-title"><span>📱</span> CHỌN ỨNG DỤNG</div>
     <div class="ff-app-grid">
+
+      <!-- ICON APP FFTH: thay 🎯 bằng ảnh -->
       <button type="button" class="ff-app-card active" data-app="ffth" onclick="ffSelectApp('ffth')">
-        <div class="app-ico">🎯</div>
+        <div class="app-ico">
+          <img src="ff-logo.png" alt="FFTH"
+               onerror="this.onerror=null;this.src='ff-logo.png'">
+        </div>
         <div class="app-name">FREE FIRE TH</div>
         <div class="app-sub">Mobile</div>
       </button>
+
       <button type="button" class="ff-app-card" data-app="ffm" onclick="ffSelectApp('ffm')">
         <div class="app-ico">💠</div>
         <div class="app-name">FREE FIRE MAX</div>
@@ -100,14 +178,6 @@
   </div>
 </div>
 
-<!-- CANVAS -->
-
-
-<!-- MAIN APP -->
-
-
-<!-- FF TOOL CORE -->
-
-
-
-<script src="tun-tun.js" defer=""></script></body></html>
+<script src="tun-tun.js" defer></script>
+</body>
+</html>
